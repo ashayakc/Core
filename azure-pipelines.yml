@@ -26,3 +26,23 @@ stages:
       - task: DotNetCoreCLI@2
         inputs:
           command: 'test'
+
+      - task: DotNetCoreCLI@2
+        inputs:
+          command: 'publish'
+          publishWebProjects: true
+
+- stage: Deploy
+  jobs:
+    - job: Deploy
+      pool:
+        vmImage: 'windows-latest'
+
+      steps:
+      - task: AzureRmWebAppDeployment@4
+        inputs:
+          ConnectionType: 'AzureRM'
+          azureSubscription: 'Avaliação Gratuita(403cea73-066c-45ec-b80f-dfb208b5efcc)'
+          appType: 'webApp'
+          WebAppName: 'AshayCore'
+          packageForLinux: '$(System.DefaultWorkingDirectory)/**/*.zip'
