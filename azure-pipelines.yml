@@ -10,39 +10,44 @@ variables:
   buildConfiguration: 'Release'
 
 stages:
-- stage: build
+- stage: Build the release candidate
   jobs:
-    - job: build
+    - job: "BuildArtifact"
       pool:
         vmImage: 'windows-latest'
 
       steps:
       - task: DotNetCoreCLI@2
+        displayName: "dotnet restore"
         inputs:
           command: 'restore'
           feedsToUse: 'select'
 
       - task: DotNetCoreCLI@2
+        displayName: "dotnet build"
         inputs:
           command: 'build'
 
       - task: DotNetCoreCLI@2
+        displayName: "dotnet test"
         inputs:
           command: 'test'
 
       - task: DotNetCoreCLI@2
+        displayName: "dotnet publish"
         inputs:
           command: 'publish'
           publishWebProjects: true
           arguments: '--configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)'
 
       - task: PublishBuildArtifacts@1
+        displayName: "Publish the artifact"
         inputs:
           PathtoPublish: '$(Build.ArtifactStagingDirectory)'
           ArtifactName: 'drop'
           publishLocation: 'Container'
 
-- stage: Deploy
+- stage: Deploy to AppService
   jobs:
     - job: Deploy
       pool:
@@ -53,13 +58,18 @@ stages:
         inputs:
           buildType: 'current'
           downloadType: 'single'
-          artifactName: 'publish'
-          downloadPath: '$(System.DefaultWorkingDirectory)'
+          artifactName: 'drop'
+          downloadPath: '$(System.ArtifactsDirectory)'
+
       - task: AzureRmWebAppDeployment@4
         inputs:
           ConnectionType: 'AzureRM'
-          azureSubscription: 'Avaliação Gratuita(403cea73-066c-45ec-b80f-dfb208b5efcc)'
+          azureSubscription: 'Avaliação Gratuita(1)(403cea73-066c-45ec-b80f-dfb208b5efcc)'
           appType: 'webApp'
           WebAppName: 'AshayCore'
-          packageForLinux: '$(System.DefaultWorkingDirectory)/publish/*.zip'
+          packageForLinux: '$(System.ArtifactsDirectory)/drop/*.zip'
+
+      
+
+      
 
