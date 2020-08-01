@@ -12,7 +12,7 @@ pool:
 resources:
   pipelines:
     - pipeline: Core.CD
-      source: Core.CI
+      source: Core\Core.CI
       trigger:
         branches:
           include:
