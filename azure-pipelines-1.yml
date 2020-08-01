@@ -29,4 +29,4 @@ jobs:
       azureSubscription: 'Avaliação Gratuita(1)(403cea73-066c-45ec-b80f-dfb208b5efcc)'
       appType: 'webApp'
       WebAppName: 'AshayCore'
-      packageForLinux: '$(System.ArtifactsDirectory)/drop/*.zip'
+      packageForLinux: 'CoreCD/drop/*.zip'
