@@ -10,7 +10,7 @@ variables:
   buildConfiguration: 'Release'
 
 stages:
-- stage: Build the release candidate
+- stage: Build
   jobs:
     - job: "BuildArtifact"
       pool:
@@ -47,7 +47,7 @@ stages:
           ArtifactName: 'drop'
           publishLocation: 'Container'
 
-- stage: Deploy to AppService
+- stage: Deploy
   jobs:
     - job: Deploy
       pool:
