@@ -6,6 +6,9 @@
 trigger:
 - master
 
+variables:
+  buildConfiguration: 'Release'
+
 stages:
 - stage: build
   jobs:
@@ -26,11 +29,18 @@ stages:
       - task: DotNetCoreCLI@2
         inputs:
           command: 'test'
-      
+
       - task: DotNetCoreCLI@2
         inputs:
           command: 'publish'
           publishWebProjects: true
+          arguments: '--configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)'
+
+      - task: PublishBuildArtifacts@1
+        inputs:
+          PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+          ArtifactName: 'drop'
+          publishLocation: 'Container'
 
 - stage: Deploy
   jobs:
