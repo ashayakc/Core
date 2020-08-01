@@ -21,7 +21,14 @@ jobs:
     vmImage: 'windows-latest'
 
   steps:
-  - download: CoreCD
+  - task: DownloadPipelineArtifact@2
+    inputs:
+      buildType: 'specific'
+      project: '3fc53ac3-5e63-4d72-93ed-478e693a6abc'
+      pipeline: 'CoreCD'
+      specificBuildWithTriggering: true
+      buildVersionToDownload: 'latest'
+      targetPath: '$(Pipeline.Workspace)'
 
   - task: AzureRmWebAppDeployment@4
     inputs:
@@ -29,4 +36,5 @@ jobs:
       azureSubscription: 'Avaliação Gratuita(1)(403cea73-066c-45ec-b80f-dfb208b5efcc)'
       appType: 'webApp'
       WebAppName: 'AshayCore'
-      packageForLinux: 'CoreCD/drop/*.zip'
+      packageForLinux: '$(Pipeline.Workspace)/drop/*.zip'
+
