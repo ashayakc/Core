@@ -9,6 +9,15 @@ trigger:
 pool:
   vmImage: 'windows-latest'
 
+resources:
+  pipelines:
+    - pipeline: Core.CD
+      source: Core.CI
+      trigger:
+        branches:
+          include:
+          - master
+
 - stage: Deploy
   jobs:
     - job: Deploy
