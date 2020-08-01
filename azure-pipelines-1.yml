@@ -23,12 +23,8 @@ jobs:
   steps:
   - task: DownloadPipelineArtifact@2
     inputs:
-      buildType: 'specific'
-      project: '3fc53ac3-5e63-4d72-93ed-478e693a6abc'
-      pipeline: 'CoreCD'
-      specificBuildWithTriggering: true
-      buildVersionToDownload: 'latest'
-      targetPath: '$(Pipeline.Workspace)'
+      artifact: 'drop'
+      path: '$(Pipeline.Workspace)/drop'
 
   - task: AzureRmWebAppDeployment@4
     inputs:
