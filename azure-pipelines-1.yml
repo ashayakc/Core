@@ -22,13 +22,6 @@ jobs:
 
   steps:
   - download: CoreCD
-  - task: DownloadBuildArtifacts@0
-    inputs:
-      buildType: 'specific'
-      specificBuildWithTriggering: true
-      downloadType: 'single'
-      artifactName: 'drop'
-      downloadPath: '$(System.ArtifactsDirectory)'
 
   - task: AzureRmWebAppDeployment@4
     inputs:
