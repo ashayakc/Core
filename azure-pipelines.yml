@@ -6,20 +6,23 @@
 trigger:
 - master
 
-pool:
-  vmImage: 'windows-latest'
+stages:
+- stage: build
+  jobs:
+    - job: build
+      pool:
+        vmImage: 'windows-latest'
 
-steps:
+      steps:
+      - task: DotNetCoreCLI@2
+        inputs:
+          command: 'restore'
+          feedsToUse: 'select'
 
-- task: DotNetCoreCLI@2
-  inputs:
-    command: 'restore'
-    feedsToUse: 'select'
+      - task: DotNetCoreCLI@2
+        inputs:
+          command: 'build'
 
-- task: DotNetCoreCLI@2
-  inputs:
-    command: 'build'
-
-- task: DotNetCoreCLI@2
-  inputs:
-    command: 'test'
+      - task: DotNetCoreCLI@2
+        inputs:
+          command: 'test'
