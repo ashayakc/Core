@@ -9,11 +9,17 @@ trigger:
 pool:
   vmImage: 'windows-latest'
 
-variables:
-  SolutionPath: 'WebApplication2.sln'
-
 steps:
+
+- task: DotNetCoreCLI@2
+  inputs:
+    command: 'restore'
+    feedsToUse: 'select'
+
 - task: DotNetCoreCLI@2
   inputs:
     command: 'build'
-    projects: '$(SolutionPath)'
+
+- task: DotNetCoreCLI@2
+  inputs:
+    command: 'test'
