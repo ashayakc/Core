@@ -21,10 +21,7 @@ jobs:
     vmImage: 'windows-latest'
 
   steps:
-  - task: DownloadPipelineArtifact@2
-    inputs:
-      artifact: 'drop'
-      path: '$(Pipeline.Workspace)/drop'
+  - download: CoreCD
 
   - task: AzureRmWebAppDeployment@4
     inputs:
@@ -32,5 +29,5 @@ jobs:
       azureSubscription: 'Avaliação Gratuita(1)(403cea73-066c-45ec-b80f-dfb208b5efcc)'
       appType: 'webApp'
       WebAppName: 'AshayCore'
-      packageForLinux: '$(Pipeline.Workspace)/drop/*.zip'
+      packageForLinux: '$(Pipeline.Workspace)/CoreCD/drop/*.zip'
 
