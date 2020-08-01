@@ -1,0 +1,10 @@
+version: "3"
+
+services: 
+    app:
+        image: ashay:latest
+
+    redis:
+        image: redis:3.2.100-nanoserver
+        ports: 
+            - "6379-6385:6379"
