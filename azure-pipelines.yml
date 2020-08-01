@@ -47,28 +47,6 @@ stages:
           ArtifactName: 'drop'
           publishLocation: 'Container'
 
-- stage: Deploy
-  jobs:
-    - job: Deploy
-      pool:
-        vmImage: 'windows-latest'
-
-      steps:
-      - task: DownloadBuildArtifacts@0
-        inputs:
-          buildType: 'current'
-          downloadType: 'single'
-          artifactName: 'drop'
-          downloadPath: '$(System.ArtifactsDirectory)'
-
-      - task: AzureRmWebAppDeployment@4
-        inputs:
-          ConnectionType: 'AzureRM'
-          azureSubscription: 'Avaliação Gratuita(1)(403cea73-066c-45ec-b80f-dfb208b5efcc)'
-          appType: 'webApp'
-          WebAppName: 'AshayCore'
-          packageForLinux: '$(System.ArtifactsDirectory)/drop/*.zip'
-
       
 
       
