@@ -11,13 +11,11 @@ pool:
 
 resources:
   pipelines:
-    - pipeline: Core.CD
+    - pipeline: CoreCD
       source: Core\Core.CI
-      trigger:
-        branches:
-          include:
-          - master
+      branch: refs/heads/master
 
+stages:
 - stage: Deploy
   jobs:
     - job: Deploy
